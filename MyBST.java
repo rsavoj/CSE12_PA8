@@ -75,13 +75,15 @@ public class MyBST<K extends Comparable<K>, V> {
 
     public V remove(K key) {
         MyBSTNode<K, V> removing = searchHelper(this.root, key);
-        System.out.println("we are removing" + removing);
+       
         if(removing == null){
             return null;
         }
       return removeHelper(removing);
     }
     public V removeHelper( MyBSTNode<K, V> removing){
+   
+        
         if(removing == null){
             return null;
         }
@@ -92,63 +94,68 @@ public class MyBST<K extends Comparable<K>, V> {
          removeLeaf(removing);
          return removing.getValue();
         }
+       
         //case where the node has 2 children 
-        else if(hasTwoChildren(removing)){
-            System.out.println("should get here" + removing);
+         if(hasTwoChildren(removing)){
             MyBSTNode<K, V>  successor = removing.successor();
-            System.out.println("The successor is " + successor);
             swap(removing, successor);
-            System.out.println("The successor is " + successor);
             removeLeaf(removing);
             return removing.getValue();
         }
         else{
-           System.out.println("The one child case");
+        
+
             if(removing.getLeft() != null){
+                System.out.println("removing rn " + removing.getLeft());
                 swap(removing, removing.getLeft());
                 System.out.println(removing);
-                System.out.println(removing.getRight());
-                System.out.println(removing.getParent());
+                System.out.println(removing.getLeft());
             }
+           
             else{
+                System.out.println("removing rn " + removing.getRight());
+                swap(removing, removing.getRight());  
                 System.out.println(removing);
-                swap(removing, removing.getRight());
-                System.out.println(removing);
+                System.out.println(removing.getRight());
                
-            }
+            
+        }
             removeLeaf(removing);
         }
         return removing.getValue();
       
     }
     private void removeLeaf(MyBSTNode<K, V> removing){
-        System.out.println("Now removing "+ removing);
-        if(isLeftChild(removing)){
-            System.out.println("Should be left child");
+   
+        if(isLeftChild(removing)){     
             //removes left node
              removing.getParent().setLeft(null);     
         }
         else{
          //removes right node 
-         System.out.println("but is removing right child");
          removing.getParent().setRight(null);
         }
     }
 
+   
+    
     private void swap(MyBST.MyBSTNode<K, V>  nodeOne
     , MyBST.MyBSTNode<K, V> nodeTwo){
-        
-       
-       //node ones temporary variables 
-
-       MyBST.MyBSTNode<K, V> parentTemp = nodeOne.getParent();
+      
+        MyBST.MyBSTNode<K, V> parentTemp = nodeOne.getParent();
         MyBST.MyBSTNode<K, V> rightTemp = nodeOne.getRight();
         MyBST.MyBSTNode<K, V> leftTemp = nodeOne.getLeft();
+      
+        MyBST.MyBSTNode<K, V> parentTemp2 = nodeTwo.getParent();
+        MyBST.MyBSTNode<K, V> rightTemp2 = nodeTwo.getRight();
+        MyBST.MyBSTNode<K, V> leftTemp2 = nodeTwo.getLeft();
+      
+      
+      
+       
        //node twos temporary varibales 
      
-       MyBST.MyBSTNode<K, V> parentTemp2 = nodeTwo.getParent();
-       MyBST.MyBSTNode<K, V> rightTemp2 = nodeTwo.getRight();
-       MyBST.MyBSTNode<K, V> leftTemp2 = nodeTwo.getLeft();
+      
         boolean leftbool = isLeftChild(nodeTwo);
         
        //if it was the left child resets parent pointers
@@ -170,9 +177,26 @@ public class MyBST<K extends Comparable<K>, V> {
         if(leftTemp != null){
             nodeOne.getLeft().setParent(nodeTwo);
         }
-        nodeOne.setParent(parentTemp2);
+        if(nodeOne == parentTemp2){
+            nodeOne.setParent(nodeTwo);;
+        }
+        else{
+            nodeOne.setParent(parentTemp2);
+        }
+      
+        
         nodeOne.setRight(rightTemp2);
+        if(nodeOne == rightTemp2){
+            nodeOne.setRight(nodeTwo);
+        }
         nodeOne.setLeft(leftTemp2);
+        if(nodeOne == leftTemp2){
+            nodeOne.setLeft(nodeTwo);
+        }
+        if(nodeTwo == rightTemp){
+            nodeTwo.setRight(nodeOne);
+        }
+        
 
 
         if(leftbool){
@@ -186,8 +210,10 @@ public class MyBST<K extends Comparable<K>, V> {
         }
         nodeTwo.setParent(parentTemp);
         nodeTwo.setRight(rightTemp);
-        nodeTwo.setLeft(leftTemp);
+        nodeTwo.setLeft(leftTemp);    
+       //node ones temporary variables 
 
+      
        
     }
     private boolean hasNoChildren(MyBST.MyBSTNode<K, V>  curr){
@@ -203,21 +229,16 @@ public class MyBST<K extends Comparable<K>, V> {
         return false;
     }
     private boolean isLeftChild(MyBST.MyBSTNode<K, V>  nodeOne){
-      
-        System.out.println("The parent is " + nodeOne.getParent().getLeft());
-        System.out.println("The node is " + nodeOne);
         if(nodeOne.getParent() == null){
-            System.out.println("this step 1");
             return false;
         }
-        System.out.println("this step 2");
         MyBST.MyBSTNode<K, V> parentsLeft = nodeOne.getParent().getLeft();
-        if(parentsLeft == null || (parentsLeft.getLeft().getKey() == (nodeOne).getKey() 
-        && parentsLeft.getLeft().getValue() == (nodeOne).getValue())){
-            System.out.println("this step");
+      
+       
+        if(parentsLeft == null || (parentsLeft  != nodeOne)){
             return false;
         }
-        System.out.println("got here");
+       
         return true;
     }
 

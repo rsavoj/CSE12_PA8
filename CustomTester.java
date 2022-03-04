@@ -7,6 +7,7 @@ import org.junit.*;
 public class CustomTester {
     MyBST<Integer, Integer> emptyTree;
     MyBST<Integer, Integer> basicBalancedTree;
+    MyBST<Integer, Integer> unbalancedTree;
     @Before
     public void setUp(){
         emptyTree = new MyBST<>();
@@ -17,6 +18,14 @@ public class CustomTester {
         basicBalancedTree.insert(6,6);
         basicBalancedTree.insert(2,2);
         basicBalancedTree.insert(1,1);
+
+        unbalancedTree = new MyBST<>();
+        unbalancedTree.insert(1,1);
+        unbalancedTree.insert(2,2);
+        unbalancedTree.insert(3,3);
+        unbalancedTree.insert(4,4);
+        unbalancedTree.insert(5,5);
+        unbalancedTree.insert(6,6);
     }
     
     @Test
@@ -77,6 +86,13 @@ public class CustomTester {
         assertEquals((Integer)3, basicBalancedTree.remove(3));
         assertEquals((Integer)4, basicBalancedTree.root.getKey());
         assertEquals(null, basicBalancedTree.root.getRight().getLeft());
+
+        //test remove when nodes must be moved up
+        assertEquals((Integer)2, unbalancedTree.remove(2));
+        assertEquals((Integer)(1),unbalancedTree.root.getKey());
+        assertEquals((Integer)(3),unbalancedTree.root.getRight().getKey());
+        assertEquals((Integer)(4),unbalancedTree.root.getRight().getRight().getKey());
+       assertEquals((Integer)(5),unbalancedTree.root.getRight().getRight().getRight().getKey());
         
     }
 
