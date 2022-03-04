@@ -26,29 +26,38 @@ public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
             return next != null;
         }
 
+        /**
+         * This method iterates through the tree to the next successor of the
+         * current node in next.
+         * 
+         * @return the value of the previous next value
+         */
         MyBSTNode<K, V> nextNode() {
-            MyBSTNode<K, V>  temp = next;
+            MyBSTNode<K, V> temp = next;
             next = next.successor();
             lastVisited = temp;
-            
+
             return temp;
         }
 
         /**
-         * TODO: add inline comments for this method to demonstrate your
-         *   understanding of this method.
-         *
          * This method removes the last visited node from the tree.
          */
         public void remove() {
+            // cannot call the remove method if last visited is not defined
+            // as a node , already empty
             if (lastVisited == null) {
                 throw new IllegalStateException();
             }
+            // if lastVisited is not a leaf node next is set to last visited
             if (lastVisited.getRight() != null &&
                     lastVisited.getLeft() != null) {
                 next = lastVisited;
             }
+            // calls the remove method removing last visited
             MyBSTIterator.this.remove(lastVisited.getKey());
+            // after the node is removed last visited is set to null
+            // another node cannot be removed until next is called
             lastVisited = null;
         }
     }

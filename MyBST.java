@@ -1,5 +1,22 @@
+/**
+ * Name: Roya Savoj
+ * Email: rsavoj@ucsd.edu
+ * Sources used: Zyebooks, lecture slides 
+ * 
+ * This is a class that can create a MyBTS object. This object has MyBSTNodes. 
+ * Each node has a key and a value. The nodes are inputed in to the tree such
+ * that every node's key to the left of the parents is less than the parents 
+ * key and every node that is to the right of the parents key is greater 
+ *  than the parents key
+ */
 import java.util.ArrayList;
 
+/**
+ * This class creates a MyBST object with size 0 and a null root. BSTNodes 
+ * can be added using the insert method following the ordering patern. Keys 
+ * can be found using the search algrithum. Nodes can be removed via the remove 
+ * mehod 
+ */
 public class MyBST<K extends Comparable<K>, V> {
     MyBSTNode<K, V> root = null;
     int size = 0;
@@ -399,45 +416,46 @@ public class MyBST<K extends Comparable<K>, V> {
         }
 
         /**
-         * TODO: add inline comments for this method to demonstrate your
-         * understanding of this method. The predecessor can be implemented
-         * in a similar way.
-         *
          * This method returns the in order successor of current node object.
          * It can be served as a helper method when implementing inorder().
          * 
          * @return the successor of current node object
          */
         public MyBSTNode<K, V> successor() {
+           //checks that the right node is not null
             if (this.getRight() != null) {
-
+                //saves the right node 
                 MyBSTNode<K, V> curr = this.getRight();
-                // checks the right side of the tree for the leftmost node
-                // this node will be the smallest node larger than the node
-                // we are looking for. The leftmost node on the right side is
-                // the smallest node on the right side. Every node on the right
-                // side is larger than our element
+                
+                //finds the minimum node of the right side of the parent and 
+                //returns it
                 while (curr.getLeft() != null) {
                     curr = curr.getLeft();
                 }
+                //returns the minimum element on the right side of the tree
                 return curr;
             } else {
-                // if there is no right child then check the parents right
-                // child
-                // Checks for when our element is the right chil
-                // if we reach the root null is returned
-                // element
+                //saves the parent and the current node 
                 MyBSTNode<K, V> parent = this.getParent();
                 MyBSTNode<K, V> curr = this;
+                //if current node is the right node and not the root curr 
+                // will be updated to parent and parent will be updated to 
+                //parents parent 
                 while (parent != null && curr == parent.getRight()) {
                     curr = parent;
                     parent = parent.getParent();
                 }
+                //returns the minimum parent on the left side of the our node
                 return parent;
             }
         }
-
+         /**
+         * This method returns the in order predecessor of current node object.
+         * 
+         * @return the predecessor of current node object
+         */
         public MyBSTNode<K, V> predecessor() {
+            //finds the maximum node on the left side of the tree 
             if (this.getLeft() != null) {
                 MyBSTNode<K, V> curr = this.getLeft();
                 while (curr.getRight() != null) {
@@ -445,10 +463,9 @@ public class MyBST<K extends Comparable<K>, V> {
                 }
                 return curr;
             }
-
             else {
-
-                // element
+               //finds the maximum parent node that the given node is a left 
+               //child or on the left side of.
                 MyBSTNode<K, V> parent = this.getParent();
                 MyBSTNode<K, V> curr = this;
                 while (parent != null && curr == parent.getLeft()) {
@@ -471,8 +488,10 @@ public class MyBST<K extends Comparable<K>, V> {
 
             MyBSTNode<K, V> comp = (MyBSTNode<K, V>) obj;
 
-            return ((this.getKey() == null ? comp.getKey() == null : this.getKey().equals(comp.getKey()))
-                    && (this.getValue() == null ? comp.getValue() == null : this.getValue().equals(comp.getValue())));
+            return ((this.getKey() == null ? comp.getKey() == 
+            null : this.getKey().equals(comp.getKey()))
+                    && (this.getValue() == null ? comp.getValue() == 
+                    null : this.getValue().equals(comp.getValue())));
         }
 
         /**
