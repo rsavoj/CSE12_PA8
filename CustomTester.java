@@ -70,6 +70,9 @@ public class CustomTester {
         assertEquals(Integer.valueOf(2),
                 emptyTree.root.getRight().getLeft().getKey());
 
+    }
+
+    public void testInsertSameKey() {
         // test insert when the key is the same
         emptyTree.insert(3, 4);
         assertEquals(Integer.valueOf(4),
@@ -111,8 +114,11 @@ public class CustomTester {
         assertEquals((Integer) 4, basicBalancedTree.root.getKey());
         assertEquals(null, basicBalancedTree.root.getRight().getLeft());
 
-        // test remove when nodes must be moved up succesivly on an unbalanced
-        // tree
+    }
+
+    @Test
+    public void testRemoveThree() {
+        // test remove when nodes must be moved up on an unbalanced tree
         assertEquals((Integer) 2, unbalancedTree.remove(2));
         assertEquals((Integer) (1), unbalancedTree.root.getKey());
         assertEquals((Integer) (3), unbalancedTree.root.getRight().getKey());
@@ -121,12 +127,15 @@ public class CustomTester {
         assertEquals((Integer) (5),
                 unbalancedTree.root.getRight().getRight().getRight().getKey());
 
+    }
+
+    @Test
+    public void testRemoveFour() {
         // tests remove when the successor has a sucessor
         complexBalancedTree.remove(10);
         assertEquals((Integer) 15, complexBalancedTree.root.getKey());
         System.out.println(complexBalancedTree.root.getRight().getRight().toString());
         assertEquals((Integer) 17, complexBalancedTree.root.getRight().getLeft().getKey());
-
     }
 
     @Test
@@ -139,12 +148,21 @@ public class CustomTester {
 
     @Test
     public void testInorder() {
-        ArrayList<MyBST.MyBSTNode<Integer, Integer>> emptyTreeExpected 
-        = new ArrayList<>();
-        ArrayList<MyBST.MyBSTNode<Integer, Integer>> emptyTreeOutput 
-        = emptyTree.inorder();
+        ArrayList<MyBST.MyBSTNode<Integer, Integer>> emptyTreeExpected = new ArrayList<>();
+        ArrayList<MyBST.MyBSTNode<Integer, Integer>> emptyTreeOutput = emptyTree.inorder();
         assertEquals("The arrayList of an empty tree should have no elements",
                 0, emptyTreeOutput.size());
+    }
+
+    @Test
+    public void testCalendar() {
+        MyCalendar cal = new MyCalendar();
+        cal.book(10, 20);
+        // book an event that is within both bounds
+        assertFalse(cal.book(11, 12));
+
+        // book an event where times overlap
+        assertTrue(cal.book(2, 2));
     }
 
 }
