@@ -143,8 +143,9 @@ public class PublicTester {
         // Book an event on a calender with no event
         assertTrue(cal.book(10, 20));
         // Book a conflicting event
-        assertFalse(cal.book(5, 15));
         assertFalse(cal.book(15, 25));
+        assertFalse(cal.book(5, 15));
+       
         //events can be consecutive
         assertTrue(cal.book(0, 10));
         assertTrue(cal.book(20, 30));
