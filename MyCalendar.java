@@ -1,5 +1,7 @@
 import java.util.Calendar;
 
+import org.junit.internal.matchers.StacktracePrintingMatcher;
+
 public class MyCalendar {
     MyTreeMap<Integer, Integer> calendar;
     
@@ -11,40 +13,41 @@ public class MyCalendar {
         if(start < 0 || start >= end){
             throw new IllegalArgumentException();
         }
-        System.out.println(calendar.floorKey(start));
-        System.out.println(calendar.ceilingKey(start));
-        System.out.println(calendar.get(10));
-       if( checkFloor(start, end)){
-           calendar.put(start, end);
-           return true;
-       }
-       System.out.println(calendar.floorKey(start));
-       System.out.println(calendar.ceilingKey(start));
-       return false;
-    }
-
-    private boolean checkFloor(int start, int end){
-        // if there is no key smaller than the end value in the structure
-        // returns true 
-        System.out.println("The start is " + start + " the end is " + end + 
-        " the floor is " +calendar.floorKey(end) );
-        if(calendar.floorKey(end) == null){
+      
+    
+        if(calendar.floorKey(end) == null && calendar.ceilingKey(start) == null){
+            calendar.put(start, end);
             return true;
-        }
-        // there is no key less than the start therefore the key must be in 
-        // the list 
-        else if(calendar.floorKey(start) == null){
-            return false;
-        }
-        // there is a key 
-        else{
-            if(calendar.get(calendar.floorKey(start)) + calendar.floorKey(start) >= start ){
+        } 
+        if(calendar.floorKey(end) == null){
+            int ceiling = calendar.ceilingKey(start);
+            if(ceiling < end){
                 return false;
             }
+            calendar.put(start, end);
             return true;
         }
-    }
-    
+        if(calendar.ceilingKey(start) == null){
+            int floor = calendar.floorKey(end);
+            if(calendar.get(floor) > start){
+                return false;
+            }
+            calendar.put(start, end);
+            return true;
+        }
+        // the greatest key less than the end
+        int floor = calendar.floorKey(end);
+
+        //the smallest key greater than the start
+        int ceiling = calendar.ceilingKey(start);
+        int ceilingVal = calendar.get(ceiling);
+        if(ceiling < end || floor <start || ceilingVal < end){
+            return false;
+        }
+        calendar.put(start, end);
+        return true;
+   
+    }  
 
     public MyTreeMap getCalendar(){
         return this.calendar;
