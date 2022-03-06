@@ -1,6 +1,21 @@
+
+/**
+ * Name: Roya Savoj
+ * Email: rsavoj@ucsd.edu
+ * Sources used: Zyebooks, lecture slides 
+ * 
+ * This is a class that can create a MyBTSIterator object. This object can 
+ * be used to iterate through a MyBST object.
+ */
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * This class creates a iterorator object. The iterator object has two
+ * instance vaibales next and lastVisited which contain BST nodes . The
+ * lastVisited holds the value of what was stored in next after next
+ * is called(). When next is called the next variable moves to the successor
+ */
 public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
     abstract class MyBSTNodeIterator<T> implements Iterator<T> {
         MyBSTNode<K, V> next;

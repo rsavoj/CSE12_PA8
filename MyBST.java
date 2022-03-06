@@ -1,3 +1,4 @@
+
 /**
  * Name: Roya Savoj
  * Email: rsavoj@ucsd.edu
@@ -7,57 +8,56 @@
  * Each node has a key and a value. The nodes are inputed in to the tree such
  * that every node's key to the left of the parents is less than the parents 
  * key and every node that is to the right of the parents key is greater 
- *  than the parents key
+ * than the parents key
  */
 import java.util.ArrayList;
 
 /**
- * This class creates a MyBST object with size 0 and a null root. BSTNodes 
- * can be added using the insert method following the ordering patern. Keys 
- * can be found using the search algrithum. Nodes can be removed via the remove 
- * mehod 
+ * This class creates a MyBST object with size 0 and a null root. BSTNodes
+ * can be added using the insert method following the ordering patern. Keys
+ * can be found using the search algrithum. Nodes can be removed via the remove
+ * mehod
  */
 public class MyBST<K extends Comparable<K>, V> {
     MyBSTNode<K, V> root = null;
     int size = 0;
 
-    
     /**
-     * returns the size of the MyBTS tree 
+     * returns the size of the MyBTS tree
      * 
-     * @return The size of the MyBTS tree 
+     * @return The size of the MyBTS tree
      */
     public int size() {
         return size;
     }
 
     /**
-     * Adds a node to the correct location in the tree, so that it follows the 
+     * Adds a node to the correct location in the tree, so that it follows the
      * rules of a Binary Search tree
      * 
-     * @param key the key of the node being inserted 
-     * @param value the value of the node being inserted 
-     * @return Null or the value previously in the key if it was already filled 
+     * @param key   the key of the node being inserted
+     * @param value the value of the node being inserted
+     * @return Null or the value previously in the key if it was already filled
      */
     public V insert(K key, V value) {
-        //if key is null throws a null pointer exception
+        // if key is null throws a null pointer exception
         if (key == null) {
             throw new NullPointerException();
         }
-        //calls the helper method 
+        // calls the helper method
         return insertHelper(key, value, null, this.root, false);
     }
 
     /**
      * Recursive helper methos to insert the BTSNode at the correct location.
-     * Finds the next null location where all nodes to the left of the 
-     * node are less than the node and all nodes to the right of the node have 
+     * Finds the next null location where all nodes to the left of the
+     * node are less than the node and all nodes to the right of the node have
      * a greater key
      * 
-     * @param key the key of the node being inserted 
-     * @param value the value of the node being inserted 
-     * @param parent the node we are currently searching 
-     * @return Null or the value previously in the key if it was already filled 
+     * @param key    the key of the node being inserted
+     * @param value  the value of the node being inserted
+     * @param parent the node we are currently searching
+     * @return Null or the value previously in the key if it was already filled
      */
     private V insertHelper(K key, V value, MyBST.MyBSTNode<K, V> parent,
             MyBST.MyBSTNode<K, V> curr, boolean isLeft) {
@@ -93,87 +93,88 @@ public class MyBST<K extends Comparable<K>, V> {
         return insertHelper(key, value, curr, curr.getRight(), false);
     }
 
-   /**
-     * Searches for the node with a given key in the tree and returns its 
-     * value if it is in the tree. If it is not in the tree the function 
+    /**
+     * Searches for the node with a given key in the tree and returns its
+     * value if it is in the tree. If it is not in the tree the function
      * returns null
      * 
-     * @param key the key of the node being searched for 
-     * @return Null if key is not found or the value of the key being searched 
+     * @param key the key of the node being searched for
+     * @return Null if key is not found or the value of the key being searched
      */
     public V search(K key) {
-        //if key = null return null
+        // if key = null return null
         if (key == null) {
             return null;
         }
-       //start at the root then call the helepr method to look for the key
+        // start at the root then call the helepr method to look for the key
         MyBST.MyBSTNode<K, V> curr = this.root;
         MyBST.MyBSTNode<K, V> item = searchHelper(curr, key);
-        
-        // returns null if the item was null 
+
+        // returns null if the item was null
         if (item == null) {
             return null;
         }
-        //returns the value 
+        // returns the value
         return item.getValue();
     }
-     /**
-     * Helper method used to Searcj for the node with a given key in the tree 
-     * that returns its alue if it is in the tree. If it is not in the tree the 
+
+    /**
+     * Helper method used to Searcj for the node with a given key in the tree
+     * that returns its alue if it is in the tree. If it is not in the tree the
      * function returns null
      * 
-     * @param curr the current node being searched 
-     * @param key the key of the node being searched for 
-     * @return Null if key is not found or the value of the key being searched 
+     * @param curr the current node being searched
+     * @param key  the key of the node being searched for
+     * @return Null if key is not found or the value of the key being searched
      */
     private MyBSTNode<K, V> searchHelper(MyBST.MyBSTNode<K, V> curr, K key) {
-       //returns null if we have reached the leaf of the tree 
+        // returns null if we have reached the leaf of the tree
         if (curr == null) {
             return null;
         }
-        //checks if we have found the key
+        // checks if we have found the key
         K currKey = curr.getKey();
         if (curr.getKey() == key) {
             return curr;
         }
-       //if the key is less than our current nodes key than searches the left 
-       //side of the tree 
+        // if the key is less than our current nodes key than searches the left
+        // side of the tree
         if (key.compareTo(currKey) == -1) {
             return searchHelper(curr.getLeft(), key);
         }
-        //if the key isg reater than our current nodes key than searches the  
-       // right side of the tree 
+        // if the key isg reater than our current nodes key than searches the
+        // right side of the tree
         return searchHelper(curr.getRight(), key);
 
     }
 
-     /**
-     * The remove method removes the node of a given key from the tree 
+    /**
+     * The remove method removes the node of a given key from the tree
      * 
-     * @param key the key of the node being searched for 
-     * @return the value of the key being removed 
+     * @param key the key of the node being searched for
+     * @return the value of the key being removed
      */
     public V remove(K key) {
-       //finds the node to remove in the tree 
+        // finds the node to remove in the tree
         MyBSTNode<K, V> removing = searchHelper(this.root, key);
 
-        //if the node that is found is null than it returns null
+        // if the node that is found is null than it returns null
         if (removing == null) {
             return null;
         }
-        //otherwise returns the remove helper method 
+        // otherwise returns the remove helper method
         return removeHelper(removing);
     }
 
     /**
-     * The remove helper removes the node of a given key from the tree while 
+     * The remove helper removes the node of a given key from the tree while
      * maintaining the ordering of the BST
      * 
-     * @param removing the node that we are removing from the list 
-     * @return the value of the key being removed 
+     * @param removing the node that we are removing from the list
+     * @return the value of the key being removed
      */
     public V removeHelper(MyBSTNode<K, V> removing) {
-        //if removing is null returns null
+        // if removing is null returns null
         if (removing == null) {
             return null;
         }
@@ -183,7 +184,7 @@ public class MyBST<K extends Comparable<K>, V> {
             // calls a helper method to check if the node we are removing
             // is the left child
             removeLeaf(removing);
-            //node we are removing is a leaf node it is removed and its value 
+            // node we are removing is a leaf node it is removed and its value
             // is returned
             return removing.getValue();
         }
@@ -193,31 +194,31 @@ public class MyBST<K extends Comparable<K>, V> {
             MyBSTNode<K, V> successor = removing.successor();
             swap(removing, successor);
 
-            //recursivly call the method until the node we are removing is a 
-            // leaf node 
+            // recursivly call the method until the node we are removing is a
+            // leaf node
             return removeHelper(removing);
-        } 
-        //case where the node has one child 
+        }
+        // case where the node has one child
         else {
-            //if there is a left node swap with the left side 
+            // if there is a left node swap with the left side
             if (removing.getLeft() != null) {
                 swap(removing, removing.getLeft());
             }
-            //if there is a right node swap with the right side 
+            // if there is a right node swap with the right side
             else {
                 swap(removing, removing.getRight());
             }
-            //recursivly call the method until the node we are removing is a 
-            // leaf node 
+            // recursivly call the method until the node we are removing is a
+            // leaf node
             return removeHelper(removing);
         }
 
     }
 
-   /**
-     * The remove helper removes a leaf in the Binary search tree 
+    /**
+     * The remove helper removes a leaf in the Binary search tree
      * 
-     * @param removing the node that we are removing from the list 
+     * @param removing the node that we are removing from the list
      */
     private void removeLeaf(MyBSTNode<K, V> removing) {
         if (isLeftChild(removing)) {
@@ -231,16 +232,17 @@ public class MyBST<K extends Comparable<K>, V> {
 
     /**
      * This method resets the pointers in the parent node of a left or a right
-     * child to the second node given 
+     * child to the second node given
      * 
-     * @param nodeOneParent a pointer to the parent which has a child node that 
-     * is going to be reset 
-     * @param nodeTwo the node that the parent pointer is being set to
-     * @param isLeft if this is true we reset the parent nodes left child 
-     * pointer if this is false reset the parent nodes right child  
+     * @param nodeOneParent a pointer to the parent which has a child node that
+     *                      is going to be reset
+     * @param nodeTwo       the node that the parent pointer is being set to
+     * @param isLeft        if this is true we reset the parent nodes left child
+     *                      pointer if this is false reset the parent nodes right
+     *                      child
      */
-    private void resetParent(MyBST.MyBSTNode<K, V> nodeOneParent, 
-    MyBST.MyBSTNode<K, V> nodeTwo, boolean isLeft) {
+    private void resetParent(MyBST.MyBSTNode<K, V> nodeOneParent,
+            MyBST.MyBSTNode<K, V> nodeTwo, boolean isLeft) {
         // if node one was the root resets parent pointers
         if (nodeOneParent == null) {
             root = nodeTwo;
@@ -257,35 +259,35 @@ public class MyBST<K extends Comparable<K>, V> {
         }
     }
 
-     /**
-     * This method resets the childs parent pointer to the given node 
+    /**
+     * This method resets the childs parent pointer to the given node
      * 
-     * @param nodeOneChild the child whose parent node pointers are being reset 
-     * @param nodeTwo the node that the parent pointer is being set to
+     * @param nodeOneChild the child whose parent node pointers are being reset
+     * @param nodeTwo      the node that the parent pointer is being set to
      */
     private void resetChild(MyBST.MyBSTNode<K, V> nodeOneChild,
-     MyBST.MyBSTNode<K, V> nodeTwo) {
+            MyBST.MyBSTNode<K, V> nodeTwo) {
         if (nodeOneChild != null) {
             nodeOneChild.setParent(nodeTwo);
         }
     }
 
     /**
-     * This method will swap the location of two nodes in the tree 
+     * This method will swap the location of two nodes in the tree
      * 
-     * @param nodeOne the first node being swaped 
-     * @param nodeTwo the second node being swaped 
+     * @param nodeOne the first node being swaped
+     * @param nodeTwo the second node being swaped
      */
-    private void swap(MyBST.MyBSTNode<K, V> nodeOne, 
-    MyBST.MyBSTNode<K, V> nodeTwo) {
-        //helper variables 
+    private void swap(MyBST.MyBSTNode<K, V> nodeOne,
+            MyBST.MyBSTNode<K, V> nodeTwo) {
+        // helper variables
         MyBST.MyBSTNode<K, V> parentTemp = nodeOne.getParent();
         MyBST.MyBSTNode<K, V> rightTemp = nodeOne.getRight();
         MyBST.MyBSTNode<K, V> leftTemp = nodeOne.getLeft();
         MyBST.MyBSTNode<K, V> parentTemp2 = nodeTwo.getParent();
         MyBST.MyBSTNode<K, V> rightTemp2 = nodeTwo.getRight();
         MyBST.MyBSTNode<K, V> leftTemp2 = nodeTwo.getLeft();
-       
+
         // checks if the first node is the parent of the second node
         // if this is the case it calls a helper method
         if (parentTemp == nodeTwo) {
@@ -303,18 +305,18 @@ public class MyBST<K extends Comparable<K>, V> {
         // Stores data on if the node in question is the right or left node
         boolean isLeftOne = isLeftChild(nodeOne);
         boolean isLeftTwo = isLeftChild(nodeTwo);
-        
-        //sets nodeTwo's pointers
+
+        // sets nodeTwo's pointers
         nodeOne.setParent(parentTemp2);
         nodeOne.setRight(rightTemp2);
         nodeOne.setLeft(leftTemp2);
 
-        //sets nodeOne's pointers 
+        // sets nodeOne's pointers
         nodeTwo.setParent(parentTemp);
         nodeTwo.setRight(rightTemp);
         nodeTwo.setLeft(leftTemp);
 
-        //resets the pointers of the parent nodes 
+        // resets the pointers of the parent nodes
         resetParent(parentTemp, nodeTwo, isLeftOne);
         resetParent(parentTemp2, nodeOne, isLeftTwo);
 
@@ -328,14 +330,14 @@ public class MyBST<K extends Comparable<K>, V> {
 
     /**
      * This method will swap the location of two nodes in the tree if the first
-     * node is the parent node and the second node is the child node 
+     * node is the parent node and the second node is the child node
      * 
-     * @param nodeParent the node that is being swapped and is the parent  
-     * @param nodeChild the node that is being swaped and is the child 
+     * @param nodeParent the node that is being swapped and is the parent
+     * @param nodeChild  the node that is being swaped and is the child
      */
     private void swapCaseTwo(MyBST.MyBSTNode<K, V> nodeParent,
-     MyBST.MyBSTNode<K, V> nodeChild) {
-        //stored temporary variables for the two nodes 
+            MyBST.MyBSTNode<K, V> nodeChild) {
+        // stored temporary variables for the two nodes
         boolean whichChild = isLeftChild(nodeChild);
         boolean isLeft = isLeftChild(nodeParent);
         MyBST.MyBSTNode<K, V> rightTemp = nodeParent.getRight();
@@ -374,10 +376,10 @@ public class MyBST<K extends Comparable<K>, V> {
     }
 
     /**
-     * This method checks if the current node has no children 
+     * This method checks if the current node has no children
      * 
      * @param curr the node that is being checked
-     * @return true if the current node has no children 
+     * @return true if the current node has no children
      */
     private boolean hasNoChildren(MyBST.MyBSTNode<K, V> curr) {
         if (curr.getRight() == null && curr.getLeft() == null) {
@@ -386,11 +388,11 @@ public class MyBST<K extends Comparable<K>, V> {
         return false;
     }
 
-     /**
+    /**
      * This method checks if the current node has two children
      * 
      * @param curr the node that is being checked
-     * @return true if the current node has two children 
+     * @return true if the current node has two children
      */
     private boolean hasTwoChildren(MyBST.MyBSTNode<K, V> curr) {
         if (curr.getRight() != null && curr.getLeft() != null) {
@@ -399,12 +401,12 @@ public class MyBST<K extends Comparable<K>, V> {
         return false;
     }
 
-     /**
-     * This method checks if the given node is a left child 
+    /**
+     * This method checks if the given node is a left child
      * 
      * @param nodeOne the node that is being checked
      * @return returns true if the node is the left child. Returns false
-     * if the node is a right child or is the root 
+     *         if the node is a right child or is the root
      */
     private boolean isLeftChild(MyBST.MyBSTNode<K, V> nodeOne) {
         if (nodeOne.getParent() == null) {
@@ -420,10 +422,10 @@ public class MyBST<K extends Comparable<K>, V> {
     }
 
     /**
-     * Returns an arrayList containing the keys inorder 
+     * Returns an arrayList containing the keys inorder
      * 
      * @return An arraylist of all the BTSNodes in the tree where their nodes
-     * are in order from smallest key to largest key
+     *         are in order from smallest key to largest key
      */
     public ArrayList<MyBSTNode<K, V>> inorder() {
         ArrayList<MyBSTNode<K, V>> array = new ArrayList<>();
@@ -431,7 +433,15 @@ public class MyBST<K extends Comparable<K>, V> {
         return array;
     }
 
-    private void inorderHelper(MyBSTNode<K, V> curr, ArrayList<MyBSTNode<K, V>> array) {
+    /**
+     * inorder helper method modifies the arraylist adding the nodes and then
+     * adding the remaining nodes in inreasesing order via recursive calls
+     * 
+     * @param curr  the node we are currently adding
+     * @param array the array we are adding the nodes too
+     */
+    private void inorderHelper(MyBSTNode<K, V> curr,
+            ArrayList<MyBSTNode<K, V>> array) {
         if (curr == null) {
             return;
         }
@@ -441,6 +451,11 @@ public class MyBST<K extends Comparable<K>, V> {
 
     }
 
+    /**
+     * This class creates a MyBSTNode object. Each My BTS node has a left,
+     * right, and parent pointer. Each node has a key which is used to
+     * compare nodes and a value.
+     */
     static class MyBSTNode<K, V> {
         private static final String TEMPLATE = "Key: %s, Value: %s";
         private static final String NULL_STR = "null";
@@ -561,50 +576,50 @@ public class MyBST<K extends Comparable<K>, V> {
          * @return the successor of current node object
          */
         public MyBSTNode<K, V> successor() {
-           //checks that the right node is not null
+            // checks that the right node is not null
             if (this.getRight() != null) {
-                //saves the right node 
+                // saves the right node
                 MyBSTNode<K, V> curr = this.getRight();
-                
-                //finds the minimum node of the right side of the parent and 
-                //returns it
+
+                // finds the minimum node of the right side of the parent and
+                // returns it
                 while (curr.getLeft() != null) {
                     curr = curr.getLeft();
                 }
-                //returns the minimum element on the right side of the tree
+                // returns the minimum element on the right side of the tree
                 return curr;
             } else {
-                //saves the parent and the current node 
+                // saves the parent and the current node
                 MyBSTNode<K, V> parent = this.getParent();
                 MyBSTNode<K, V> curr = this;
-                //if current node is the right node and not the root curr 
-                // will be updated to parent and parent will be updated to 
-                //parents parent 
+                // if current node is the right node and not the root curr
+                // will be updated to parent and parent will be updated to
+                // parents parent
                 while (parent != null && curr == parent.getRight()) {
                     curr = parent;
                     parent = parent.getParent();
                 }
-                //returns the minimum parent on the left side of the our node
+                // returns the minimum parent on the left side of the our node
                 return parent;
             }
         }
-         /**
+
+        /**
          * This method returns the in order predecessor of current node object.
          * 
          * @return the predecessor of current node object
          */
         public MyBSTNode<K, V> predecessor() {
-            //finds the maximum node on the left side of the tree 
+            // finds the maximum node on the left side of the tree
             if (this.getLeft() != null) {
                 MyBSTNode<K, V> curr = this.getLeft();
                 while (curr.getRight() != null) {
                     curr = curr.getRight();
                 }
                 return curr;
-            }
-            else {
-               //finds the maximum parent node that the given node is a left 
-               //child or on the left side of.
+            } else {
+                // finds the maximum parent node that the given node is a left
+                // child or on the left side of.
                 MyBSTNode<K, V> parent = this.getParent();
                 MyBSTNode<K, V> curr = this;
                 while (parent != null && curr == parent.getLeft()) {
@@ -627,10 +642,8 @@ public class MyBST<K extends Comparable<K>, V> {
 
             MyBSTNode<K, V> comp = (MyBSTNode<K, V>) obj;
 
-            return ((this.getKey() == null ? comp.getKey() == 
-            null : this.getKey().equals(comp.getKey()))
-                    && (this.getValue() == null ? comp.getValue() == 
-                    null : this.getValue().equals(comp.getValue())));
+            return ((this.getKey() == null ? comp.getKey() == null : this.getKey().equals(comp.getKey()))
+                    && (this.getValue() == null ? comp.getValue() == null : this.getValue().equals(comp.getValue())));
         }
 
         /**
