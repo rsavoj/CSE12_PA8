@@ -239,4 +239,40 @@ public class CustomTester {
        
     }
 
+
+    @Test 
+    public void testIterator() {
+    
+        MyBSTIterator<Integer, Integer> iterTree = new MyBSTIterator();
+        iterTree.root = basicBalancedTree.root;
+
+        // Initialize the BST value iterator that start from root
+        MyBSTIterator<Integer, Integer>.MyBSTValueIterator vi = 
+            iterTree.new MyBSTValueIterator(iterTree.root);
+
+             // next should points to the root
+        assertSame(iterTree.root, vi.next);
+        //lastVisited should be null
+        assertNull(vi.lastVisited);
+         // Moving forward, nextNode should return root
+         assertSame(basicBalancedTree.root, vi.nextNode());
+         // next should be forwarded to the successor of root
+         assertSame(basicBalancedTree.root.successor(), vi.next);
+         // root become the last visited node
+         vi.nextNode();
+         assertSame(basicBalancedTree.root.successor().successor(), vi.next);
+         vi.nextNode();
+         assertSame(basicBalancedTree.root.successor().successor().successor(), vi.next);
+       
+         System.out.println(vi.next);
+        try{
+            vi.nextNode();
+            assertSame(basicBalancedTree.root.successor().successor().successor().successor(), vi.next);
+            vi.nextNode();
+              assertSame(basicBalancedTree.root.successor().successor().successor().successor().successor(), vi.next);
+        }
+        catch (NoSuchElementException e){
+
+        }
+    }
 }

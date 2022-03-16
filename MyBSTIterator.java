@@ -49,6 +49,9 @@ public class MyBSTIterator<K extends Comparable<K>, V> extends MyBST<K, V> {
          */
         MyBSTNode<K, V> nextNode() {
             MyBSTNode<K, V> temp = next;
+            if(next.successor() == null){
+                throw new NoSuchElementException();
+            }
             next = next.successor();
             lastVisited = temp;
 
