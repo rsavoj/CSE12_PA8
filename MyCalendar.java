@@ -47,9 +47,12 @@ public class MyCalendar {
             calendar.put(start, end);
             return true;
         }
+       
         // case where there are no items less than the end value
         if (calendar.floorKey(end) == null) {
+            
             int ceiling = calendar.ceilingKey(start);
+            System.out.println("The ceiling is " + ceiling);
             // checks if the celing is less than the end value
             if (ceiling < end) {
                 return false;
@@ -60,7 +63,9 @@ public class MyCalendar {
         }
         // case where there are no elements greater than start
         if (calendar.ceilingKey(start) == null) {
+
             int floor = calendar.floorKey(end);
+            System.out.println("The floor is " + floor);
             // checks if the fllor value if > than the start
             if (calendar.get(floor) > start) {
                 return false;
@@ -74,10 +79,13 @@ public class MyCalendar {
 
         // the smallest key greater than the start
         int ceiling = calendar.ceilingKey(start);
+        
         int ceilingVal = calendar.get(ceiling);
+        int floorVal = calendar.get(floor);
+        System.out.println("The floor is " + floor+ "The ceiling is " + ceiling + "The celing value is " + ceilingVal+ "The floor val is " + floorVal);
 
         // if conditions are violated element is not added
-        if (ceiling < end || floor < start || ceilingVal < end) {
+        if (ceiling < end || floorVal > start || ceilingVal < end) {
             return false;
         }
         calendar.put(start, end);

@@ -227,6 +227,14 @@ public class CustomTester {
          catch(IllegalArgumentException e){
              System.out.println("cannot have a negative start time");
          }
+
+       
+         assertTrue(cal.book(0, 1)); 
+         assertTrue(cal.book(2, 3));
+          assertFalse(cal.book(0, 1));
+
+       
+          assertTrue(cal.book(3, 5));
         
        
     }
