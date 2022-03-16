@@ -264,7 +264,8 @@ public class CustomTester {
          vi.nextNode();
          assertSame(basicBalancedTree.root.successor().successor().successor(), vi.next);
        
-         System.out.println(vi.next);
+         System.out.println("The next node is " + vi.next);
+         vi.nextNode();
         try{
             vi.nextNode();
             assertSame(basicBalancedTree.root.successor().successor().successor().successor(), vi.next);
