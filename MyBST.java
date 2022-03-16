@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * mehod
  */
 public class MyBST<K extends Comparable<K>, V> {
+    public static final int ZERO =0;
     MyBSTNode<K, V> root = null;
     int size = 0;
 
@@ -87,7 +88,7 @@ public class MyBST<K extends Comparable<K>, V> {
 
         // if the key is less than the current key the insertHelper method
         // will search the left child
-        if (key.compareTo(curr.getKey()) < 0) {
+        if (key.compareTo(curr.getKey()) < ZERO) {
 
             return insertHelper(key, value, curr, curr.getLeft(), true);
         }
@@ -158,9 +159,13 @@ public class MyBST<K extends Comparable<K>, V> {
      * @return the value of the key being removed
      */
     public V remove(K key) {
+        if(key == null){
+            return null;
+        }
         // finds the node to remove in the tree
         MyBSTNode<K, V> removing = searchHelper(this.root, key);
 
+       
         // if the node that is found is null than it returns null
         if (removing == null) {
             return null;
@@ -253,7 +258,7 @@ public class MyBST<K extends Comparable<K>, V> {
         }
         // if it was the left child resets parent pointers
         else if (isLeft) {
-            System.out.println("We are setting the left pointer of " + nodeOneParent);
+   
             (nodeOneParent).setLeft(nodeTwo);
             System.out.println("To " + nodeOneParent.getLeft());
         }
@@ -646,8 +651,10 @@ public class MyBST<K extends Comparable<K>, V> {
 
             MyBSTNode<K, V> comp = (MyBSTNode<K, V>) obj;
 
-            return ((this.getKey() == null ? comp.getKey() == null : this.getKey().equals(comp.getKey()))
-                    && (this.getValue() == null ? comp.getValue() == null : this.getValue().equals(comp.getValue())));
+            return ((this.getKey() == null ? comp.getKey() == null :
+             this.getKey().equals(comp.getKey()))
+                    && (this.getValue() == null ? comp.getValue() == null :
+                     this.getValue().equals(comp.getValue())));
         }
 
         /**

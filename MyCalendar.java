@@ -18,7 +18,7 @@ import org.junit.internal.matchers.StacktracePrintingMatcher;
  */
 public class MyCalendar {
     MyTreeMap<Integer, Integer> calendar;
-
+    public static final int ZERO = 0;
     /**
      * The calander constructor creates a calander with no events
      */
@@ -37,7 +37,7 @@ public class MyCalendar {
      */
     public boolean book(int start, int end) {
         // The start of the event cannot be less than time 0 or greater
-        if (start < 0 || start >= end) {
+        if (start < ZERO || start >= end) {
             throw new IllegalArgumentException();
         }
 
@@ -82,7 +82,7 @@ public class MyCalendar {
         
         int ceilingVal = calendar.get(ceiling);
         int floorVal = calendar.get(floor);
-        System.out.println("The floor is " + floor+ "The ceiling is " + ceiling + "The celing value is " + ceilingVal+ "The floor val is " + floorVal);
+     
 
         // if conditions are violated element is not added
         if (ceiling < end || floorVal > start || ceilingVal < end) {

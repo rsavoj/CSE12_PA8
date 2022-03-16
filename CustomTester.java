@@ -47,7 +47,8 @@ public class CustomTester {
         complexBalancedTree.insert(17, 10);
         complexBalancedTree.insert(22, 10);
         complexBalancedTree.insert(8, 10);
-        complexBalancedTree.insert(7, 10);
+        complexBalancedTree.insert(7, 7);
+        complexBalancedTree.insert(-1, -1);
 
         unbalancedTree = new MyBST<>();
         unbalancedTree.insert(1, 1);
@@ -120,6 +121,7 @@ public class CustomTester {
         // tests remove on an empty tree
         assertEquals(null, emptyTree.remove(1));
         assertEquals(null, emptyTree.root);
+        assertEquals(null, emptyTree.remove(null));
 
         // test remove on a MyBTSNode not in the tree when tree is filled
         assertEquals(null, basicBalancedTree.remove(7));
@@ -185,6 +187,14 @@ public class CustomTester {
         // search for an element not in the tree should return null
         assertEquals("Null should be returned", null,
                 basicBalancedTree.search(0));
+
+
+        assertEquals(Integer.valueOf(6), unbalancedTree.search(6));
+        assertEquals(Integer.valueOf(1), unbalancedTree.search(1));
+        assertEquals(Integer.valueOf(-1), complexBalancedTree.search(-1));
+        assertEquals(null, complexBalancedTree.search(2032));
+    
+
     }
 
     /**
@@ -240,40 +250,6 @@ public class CustomTester {
     }
 
 
-    @Test 
-    public void testIterator() {
+   
     
-        MyBSTIterator<Integer, Integer> iterTree = new MyBSTIterator();
-        iterTree.root = basicBalancedTree.root;
-
-        // Initialize the BST value iterator that start from root
-        MyBSTIterator<Integer, Integer>.MyBSTValueIterator vi = 
-            iterTree.new MyBSTValueIterator(iterTree.root);
-
-             // next should points to the root
-        assertSame(iterTree.root, vi.next);
-        //lastVisited should be null
-        assertNull(vi.lastVisited);
-         // Moving forward, nextNode should return root
-         assertSame(basicBalancedTree.root, vi.nextNode());
-         // next should be forwarded to the successor of root
-         assertSame(basicBalancedTree.root.successor(), vi.next);
-         // root become the last visited node
-         vi.nextNode();
-         assertSame(basicBalancedTree.root.successor().successor(), vi.next);
-         vi.nextNode();
-         assertSame(basicBalancedTree.root.successor().successor().successor(), vi.next);
-       
-         System.out.println("The next node is " + vi.next);
-         vi.nextNode();
-        try{
-            vi.nextNode();
-            assertSame(basicBalancedTree.root.successor().successor().successor().successor(), vi.next);
-            vi.nextNode();
-              assertSame(basicBalancedTree.root.successor().successor().successor().successor().successor(), vi.next);
-        }
-        catch (NoSuchElementException e){
-
-        }
-    }
 }
