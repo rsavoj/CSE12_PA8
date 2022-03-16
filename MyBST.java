@@ -66,6 +66,8 @@ public class MyBST<K extends Comparable<K>, V> {
             curr = new MyBSTNode<K, V>(key, value, parent);
             if (parent == null) {
                 root = curr;
+               // curr.setParent(root);
+                size++;
                 return null;
             }
             if (isLeft) {
@@ -73,6 +75,7 @@ public class MyBST<K extends Comparable<K>, V> {
             } else {
                 parent.setRight(curr);
             }
+            size++;
             return null;
         }
         // base case for when key is already in the Binary Search tree
@@ -221,6 +224,7 @@ public class MyBST<K extends Comparable<K>, V> {
      * @param removing the node that we are removing from the list
      */
     private void removeLeaf(MyBSTNode<K, V> removing) {
+        size--;
         if (isLeftChild(removing)) {
             // removes left node
             removing.getParent().setLeft(null);

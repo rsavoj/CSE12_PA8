@@ -63,9 +63,11 @@ public class CustomTester {
      */
     @Test
     public void testInsert() {
+        assertEquals(0, emptyTree.size);
         // inserts a node at the root
         emptyTree.insert(1, 2);
         assertEquals(Integer.valueOf(1), emptyTree.root.getKey());
+        assertEquals(1, emptyTree.size);
 
         // inserts a node right side
         emptyTree.insert(3, 3);
@@ -73,6 +75,9 @@ public class CustomTester {
         emptyTree.insert(2, 3);
         assertEquals(Integer.valueOf(2),
                 emptyTree.root.getRight().getLeft().getKey());
+        assertEquals(3, emptyTree.size);
+       
+        
 
     }
 
@@ -101,6 +106,9 @@ public class CustomTester {
         } catch (NullPointerException e) {
             System.out.println("Cannot insert a null node into a binary tree");
         }
+         
+        //insert a node to a tree with a root
+        
     }
 
     /**
